@@ -1,0 +1,86 @@
+{% assign menu_handle = section.settings.menu %}
+{% assign navigation_menu = linklists[menu_handle] %}
+{% assign logo_size = section.settings.logo_size %}
+
+<header>
+  <div id="header" class="site_header">
+    <div class="top_header">
+      <form action="/search" method="get" class="search-form">
+        <img class="site_header--logo_image" src="/assets/Icons/search.svg" alt="{{ section.settings.alt_text }}" width="{{ logo_size }}">
+        <input type="search" name="q" placeholder="Search" class="search-input">
+        {% comment %} <button type="submit" class="search-submit"><i class="fas fa-search"></i></button> {% endcomment %}
+      </form>
+      
+    {% if section.settings.logo != blank %}
+      <div class="site_header--logo">
+      <img class="site_header--logo_image" src="{{ section.settings.logo | img_url: "master" }}" alt="{{ section.settings.alt_text }}" width="{{ logo_size }}">
+    {% else %}
+      <h1>{{ shop.name }}</h1>
+      </div>
+    {% endif %}
+
+    <div class="site_header--icons">
+      <img class="site_header--logo_image" src="/assets/wishlist.svg.svg" alt="{{ section.settings.alt_text }}" width="{{ logo_size }}">
+      <img class="site_header--logo_image" src="/assets/account.svg.svg" alt="{{ section.settings.alt_text }}" width="{{ logo_size }}">
+      <img class="site_header--logo_image" src="/assets/bag.svg.svg" alt="{{ section.settings.alt_text }}" width="{{ logo_size }}">
+    </div>
+  </div>
+  <nav>
+    <ul>
+      {% for link in navigation_menu.links %}
+        {% if link.links %}
+          <li class="dropdown">
+            <a href="{{ link.url }}">{{ link.title }}</a>
+            <ul class="dropdown-menu">
+              {% for child_link in link.links %}
+                <li>
+                  <a href="{{ child_link.url }}">{{ child_link.title }}</a>
+                  {% if child_link.links %}
+                    <ul class="sub-menu">
+                      {% for grandchild_link in child_link.links %}
+                        <li><a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a></li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </li>
+        {% else %}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+</div>
+</header>
+
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Select Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Site Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_size",
+      "label": "Logo Size",
+      "min": 50,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    }
+  ]
+}
+{% endschema %} 
