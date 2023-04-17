@@ -1,12 +1,26 @@
 {
   "current": {
+    "link_color": "#555452",
+    "default_color": "#555452",
     "sections": {
       "header": {
         "type": "header",
         "settings": {
           "menu": "main-menu",
+          "menu_spacing": 32,
           "logo": "shopify:\/\/shop_images\/logo.svg",
-          "logo_size": 240
+          "logo_size": 240,
+          "icon_size": 25,
+          "search_enable": true,
+          "search_icon": "shopify:\/\/shop_images\/search.svg",
+          "wishlist_enable": true,
+          "wishlist_text": "#Wishlist",
+          "wishlist_icon": "shopify:\/\/shop_images\/wishlist.svg",
+          "account_icon": "shopify:\/\/shop_images\/account.svg",
+          "account_text": "Account",
+          "bag_enable": true,
+          "bag_icon": "shopify:\/\/shop_images\/bag.svg",
+          "bag_text": "Bag: 01"
         }
       }
     },

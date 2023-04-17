@@ -5,7 +5,7 @@
     "theme_version": "1.0.0",
     "theme_author": "Jennifer Delmonte",
     "theme_support_email": "jennifer.delmonte08@gmail.com",
-    "theme_documentation_url": "https://example.com/"
+    "theme_documentation_url": "https:\/\/example.com\/"
   },
   {
     "name": "Utilities - Colors",
@@ -22,4 +22,4 @@
       }
     ]
   }
-] 
+]
