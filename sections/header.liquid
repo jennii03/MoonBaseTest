@@ -1,32 +1,70 @@
-{% assign menu_handle = section.settings.menu %}
-{% assign navigation_menu = linklists[menu_handle] %}
-{% assign logo_size = section.settings.logo_size %}
+{% liquid
+  assign menu_handle = section.settings.menu
+  assign navigation_menu = linklists[menu_handle]
+  assign menu_spacing = section.settings.menu_spacing
+  assign logo_size = section.settings.logo_size
+  assign icon_size = section.settings.icon_size
+  assign logo = section.settings.logo
+  assign alt_text = section.settings.alt_text
+
+  assign search_enable = section.settings.search_enable
+  assign search_icon = section.settings.search_icon | img_url: 'master'
+
+  assign wishlist_text = section.settings.wishlist_text
+  assign wishlist_enable = section.settings.wishlist_enable
+  assign wishlist_icon = section.settings.wishlist_icon | img_url: 'master'
+
+  assign account_text = section.settings.account_text
+  assign account_icon = section.settings.account_icon | img_url: 'master'
+
+  assign bag_text = section.settings.bag_text
+  assign bag_enable = section.settings.bag_enable
+  assign bag_icon = section.settings.bag_icon | img_url: 'master'
+%}
 
 <header>
   <div id="header" class="site_header">
     <div class="top_header">
       <form action="/search" method="get" class="search-form">
-        <img class="site_header--logo_image" src="/assets/Icons/search.svg" alt="{{ section.settings.alt_text }}" width="{{ logo_size }}">
-        <input type="search" name="q" placeholder="Search" class="search-input">
-        {% comment %} <button type="submit" class="search-submit"><i class="fas fa-search"></i></button> {% endcomment %}
+        <div class="search-box">
+          <button type="submit">
+            <img src="{{ search_icon }}" alt="Search">
+            </button>
+          <input type="text" placeholder="Search...">
+        </div>
       </form>
       
-    {% if section.settings.logo != blank %}
       <div class="site_header--logo">
-      <img class="site_header--logo_image" src="{{ section.settings.logo | img_url: "master" }}" alt="{{ section.settings.alt_text }}" width="{{ logo_size }}">
-    {% else %}
-      <h1>{{ shop.name }}</h1>
+        {% if logo != blank %}
+          <img class="site_header--logo_image" src="{{ logo | img_url: "master" }}" alt="{{ alt_text }}" width="{{ logo_size }}">
+        {% else %}
+          <h1>{{ shop.name }}</h1>
+        {% endif %}
       </div>
-    {% endif %}
-
+        
     <div class="site_header--icons">
-      <img class="site_header--logo_image" src="/assets/wishlist.svg.svg" alt="{{ section.settings.alt_text }}" width="{{ logo_size }}">
-      <img class="site_header--logo_image" src="/assets/account.svg.svg" alt="{{ section.settings.alt_text }}" width="{{ logo_size }}">
-      <img class="site_header--logo_image" src="/assets/bag.svg.svg" alt="{{ section.settings.alt_text }}" width="{{ logo_size }}">
+      {% if wishlist_enable %}
+        <div class="header__icons-wishlist">
+          <img class="site_header--logo_image" src="{{ wishlist_icon }}" alt="{{ alt_text }}" width="{{ icon_size }}">
+          <span>{{ wishlist_text }}</span>
+        </div>
+      {% endif %}
+      {% if settings.customer_accounts %}
+        <div class="header__icons-account">
+          <img class="site_header--logo_image" src="{{ account_icon }}" alt="{{ alt_text }}" width="{{ icon_size }}">
+          <span>{{ account_text }}</span>
+        </div>
+      {% endif %}
+      {% if bag_enable %}
+        <div class="header__icons-bag">
+          <img class="site_header--logo_image" src="{{ bag_icon }}" alt="{{ alt_text }}" width="{{ icon_size }}">
+          <span>{{ bag_text }}</span>
+        </div>
+      {% endif %}
     </div>
   </div>
-  <nav>
-    <ul>
+  <nav class="top__menu">
+    <ul class="top__menu-list">
       {% for link in navigation_menu.links %}
         {% if link.links %}
           <li class="dropdown">
@@ -55,6 +93,11 @@
 </div>
 </header>
 
+<style>
+  .top__menu .top__menu-list {
+    padding: {{ menu_spacing }}px 0;
+  }
+</style>
 
 {% schema %}
 {
@@ -65,6 +108,16 @@
       "id": "menu",
       "label": "Select Menu",
       "default": "main-menu"
+    },
+    {
+      "type": "range",
+      "id": "menu_spacing",
+      "label": "Menu Spacing",
+      "min": 16,
+      "max": 80,
+      "step": 16,
+      "unit": "px",
+      "default": 16
     },
     {
       "type": "image_picker",
@@ -80,6 +133,72 @@
       "step": 5,
       "unit": "px",
       "default": 50
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon Size",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "checkbox",
+      "id": "search_enable",
+      "label": "Enable Search input",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "search_icon",
+      "label": "Search icon"
+    },
+    {
+      "type": "checkbox",
+      "id": "wishlist_enable",
+      "label": "Enable Wishlist",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "wishlist_text",
+      "label": "Wishlist Text",
+      "default": "#Wishlist"
+    },
+    {
+      "type": "image_picker",
+      "id": "wishlist_icon",
+      "label": "Wishlist Icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "account_icon",
+      "label": "Account Icon"
+    },
+    {
+      "type": "text",
+      "id": "account_text",
+      "label": "Account Text",
+      "default": "Account"
+    },
+    {
+      "type": "checkbox",
+      "id": "bag_enable",
+      "label": "Enable Bag",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "bag_icon",
+      "label": "Bag Icon"
+    },
+    {
+      "type": "text",
+      "id": "bag_text",
+      "label": "Bag Text",
+      "default": "Bag: 01"
     }
   ]
 }

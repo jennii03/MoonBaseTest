@@ -1,13 +1,25 @@
 [
-<<<<<<< HEAD
   {
     "name": "theme_info",
     "theme_name": "Moon Base",
     "theme_version": "1.0.0",
-    "theme_author": "Jennifer Delmonte"
+    "theme_author": "Jennifer Delmonte",
+    "theme_support_email": "jennifer.delmonte08@gmail.com",
+    "theme_documentation_url": "https://example.com/"
+  },
+  {
+    "name": "Utilities - Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "link_color",
+        "label": "Links Color"
+      },
+      {
+        "type": "color",
+        "id": "default_color",
+        "label": "Default Color"
+      }
+    ]
   }
 ] 
-=======
-
-]
->>>>>>> 9237da9be3ecc8f1c9bf0fd49d7e8c0660cb6b46
